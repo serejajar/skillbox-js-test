@@ -143,8 +143,6 @@
               <br>
               <br>
               Рекомендую <a href="https://learn.javascript.ru/closure">статью</a> про замыкание и область видимости переменных.
-
-
             </p>
           </div>
 
@@ -178,8 +176,27 @@
               </code>
             </pre>
             <h3>Ответ:</h3>
-            <p class="page-content__answer">Удалите этот текст и напишите свой ответ в данном теге:
-              <code>p</code> (прямо в разметке в файле review.html)</p>
+            <p class="page-content__answer">
+              Тут важно помнить что в функциях this указывает на глобальный контекст (например, window в браузере) если она не была вызванна с помощью new. В случае использования new, this внутри функции будет указывать на созданный пустой объект. В объектах this указывает на сам объект.
+              <br>
+              <br>
+              1) <code>testFunction()</code> - выдаст 66, т.к. внутри функции testFunction() есть функция IIFE (функция немедленного вызова), которая вызывается сразу и переопределяет значение this.property на 66. При этом, внутри функции IIFE и самой testFunction this указывает на глобальный объект window.
+              <br>
+              <br>
+              2) <code>new testFunction()</code> - выдаст 12, т.к. при вызове функции с помощью new создается новый объект, который передается в качестве this в функцию testFunction(). При этом, внутри функции IIFE this указывает на глобальный объект window, а в самой testFunction this указывает на созданный объект.
+              <br>
+              <br>
+              3) <code>testObject.method()</code> - выдаст 9, т.к. this внутри метода method() указывает на объект testObject, а свойство property в объекте testObject равно 9.
+              <br>
+              <br>
+              4) <code>new testObject.method()</code> - выдаст undefined, т.к. при вызове метода с помощью new создается новый пустой объект, который передается в качестве this в method(). Т.е. внутри метода method() this указывает на созданный объект и в этом объекте нет свойства property.
+              <br>
+              <br>
+              5) <code>testFunction.call(testFunction)</code> - выдаст 12, так как метод call использует первый аргумент как значение this для функции на которой он был вызван. Т.е. внутри функции testFunction this теперь указывает на testFunction (вместо window), где свойство property равно 12. При этом, внутри функции IIFE this указывает на глобальный объект window и не меняет значение свойства property в testFunction.
+              <br>
+              <br>
+              6) <code>testObject.method.call(testFunction)</code> - выдаст undefined, т.к. метод call использует первый аргумент как значение this для функции testObject.method(). Т.е. внутри метода method() this теперь указывает на testFunction, где свойство property отсутвует.
+            </p>
           </div>
 
           <!-- Задание №5 -->
