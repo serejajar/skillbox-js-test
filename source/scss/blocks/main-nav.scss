@@ -53,6 +53,12 @@
       opacity: 0;
       transition: transform ease-out 0.15s, opacity ease-out 0.15s;
       transform: translateX(-15px);
+
+      @for $i from 1 through 10 {
+        &:nth-child(#{$i}) {
+          transition-delay: #{$i * .1}s;
+        }
+      }
     }
 
     &:not(:last-child) {
