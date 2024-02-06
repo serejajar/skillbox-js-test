@@ -52,8 +52,5 @@ const initPageMenu = () => {
   }
 };
 
-
-
-
 export { initPageMenu };
 
